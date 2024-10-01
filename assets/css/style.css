@@ -1,0 +1,305 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.main {
+  padding: 20px;
+}
+
+/* Hero Section Styles */
+.hero {
+  position: relative;
+  background-image: url('https://media.istockphoto.com/id/1496192456/id/foto/potret-seorang-wanita-lulusan-muda-yang-merenungkan-kelulusannya.jpg?s=1024x1024&w=is&k=20&c=R3P-Cq1KPvFiWJchi88V6RZrF_7j-Bp-WsXePsmbWBM='); 
+  background-size: cover;
+  background-position: center;
+  height: 400px; 
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; 
+  padding: 20px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  margin: 0;
+}
+
+.hero-content p:first-of-type {
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.hero-buttons {
+  margin-top: 1.5rem;
+}
+
+.hero-buttons .btn {
+  width: 150px;
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #000000;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #e7f1ff;
+}
+
+/* Additional styles for other sections */
+.section {
+  padding: 60px 0;
+}
+
+.pagetitle h1 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.manfaat {
+  text-align: center;
+}
+
+.manfaat .img-manfaat {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.card {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  max-width: 280px;
+  margin: auto;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-footer .btn {
+  width: 100%;
+  border-radius: 50px;
+}
+
+.btn-detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.apa-itu {
+  background-color: #343a40;
+  color: white;
+  padding: 40px 0;
+}
+
+.syarat-ketentuan, .manfaat {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.syarat-ketentuan ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.syarat-ketentuan li {
+  padding: 10px;
+  background-color: #e9ecef;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.manfaat {
+  padding: 40px 0;
+}
+
+.manfaat p {
+  margin: 20px 0;
+}
+
+.manfaat .img-manfaat {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.manfaat .col {
+  text-align: center;
+}
+
+.alur-pendaftaran .row {
+  display: flex; 
+}
+
+.alur-pendaftaran h2 {
+  margin-bottom: 40px;
+}
+
+.alur-card {
+  background-color: #f9f9f9;
+  border: 1px solid #007bff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.alur-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.2);
+}
+
+.step {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.card-body {
+  flex: 1;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.8rem; /* Smaller font size for mobile */
+  }
+
+  .hero-buttons .btn {
+    width: 100%; /* Full width buttons on mobile */
+    margin: 5px 0; /* Margin between buttons */
+  }
+
+  .section {
+    padding: 40px 0; /* Less padding for mobile */
+  }
+
+  .card {
+    max-width: 90%; /* Wider cards on mobile */
+  }
+
+  .manfaat .img-manfaat {
+    font-size: 40px; /* Smaller icon size for mobile */
+  }
+
+  .step {
+    width: 30px; /* Smaller step circle */
+    height: 30px;
+    line-height: 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.5rem; /* Further reduced font size for very small screens */
+  }
+
+  .hero-content {
+    padding: 10px; /* Less padding */
+  }
+}
+
+/* Styles for Syarat per Beasiswa Section */
+.syarat-per-beasiswa {
+  background-color: #f8f9fa; /* Light background for the section */
+  padding: 40px 20px; /* Padding around the section */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.syarat-per-beasiswa .pagetitle {
+  text-align: center; /* Center the title */
+  margin-bottom: 20px; /* Space below the title */
+}
+
+.syarat-per-beasiswa h2 {
+  font-size: 2rem; /* Size for main heading */
+  color: #343a40; /* Dark color for text */
+}
+
+.syarat-item {
+  background-color: #ffffff; /* White background for each item */
+  padding: 20px; /* Padding inside each item */
+  border-radius: 5px; /* Rounded corners for items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-bottom: 20px; /* Space between items */
+}
+
+.syarat-item h5 {
+  font-size: 1.5rem; /* Size for subheadings */
+  color: #007bff; /* Primary color for subheadings */
+  margin-bottom: 10px; /* Space below subheadings */
+}
+
+.syarat-item p {
+  margin-bottom: 10px; /* Space below paragraphs */
+}
+
+.syarat-item ul {
+  list-style-type: disc; /* Bullet points for lists */
+  padding-left: 20px; /* Indent list */
+  color: #495057; /* Darker color for list text */
+}
+
+.syarat-item li {
+  margin-bottom: 5px; /* Space between list items */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .syarat-per-beasiswa h2 {
+      font-size: 1.8rem; /* Adjust title size for smaller screens */
+  }
+
+  .syarat-item h5 {
+      font-size: 1.25rem; /* Smaller size for subheadings on smaller screens */
+  }
+}
