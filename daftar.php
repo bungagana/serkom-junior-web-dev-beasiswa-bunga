@@ -146,13 +146,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                     <label for="jenisBeasiswa" class="col-sm-2 col-form-label form-label">Pilihan
                                         Beasiswa</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" id="jenisBeasiswa" name="jenisBeasiswa"
-                                            aria-label="Pilih Jenis Beasiswa" required>
-                                            <option selected disabled value="">Pilih Jenis Beasiswa</option>
-                                            <option value="Akademik">Akademik</option>
-                                            <option value="Non-Akademik">Non-Akademik</option>
-                                            <option value="KIP Kuliah">KIP Kuliah</option>
-                                        </select>
+                                    <select class="form-select" id="jenisBeasiswa" name="jenisBeasiswa" aria-label="Pilih Jenis Beasiswa" required>
+                                        <option selected disabled value="">Pilih Jenis Beasiswa</option>
+                                        <option value="Akademik">Akademik</option>
+                                        <option value="Non-Akademik">Non-Akademik</option>
+                                        <option value="Tahfids">Tahfids</option>
+                                        <option value="Internasional">Internasional</option>
+                                    </select>
+
                                         <div class="invalid-feedback"> Harap pilih jenis beasiswa. </div>
                                     </div>
                                 </div>
