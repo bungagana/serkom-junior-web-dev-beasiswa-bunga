@@ -1,11 +1,21 @@
-#header {
-    background-color: #007bff; /* Warna biru */
-    padding: 15px 0; /* Padding atas dan bawah */
-    z-index: 1000; /* Menjaga header di atas elemen lain */
+header {
+    background-color: #800000; /* Warna merah maron untuk header */
+    color: white; /* Warna teks di header */
+    padding: 15px; /* Padding untuk header */
+    position: fixed; /* Membuat header tetap di atas saat scroll */
+    width: 100%; /* Lebar penuh */
+    z-index: 20; /* Z-index agar tetap di atas tab */
+}
+
+header h1 {
+    margin: 0; /* Menghapus margin h1 */
+    font-size: 24px; /* Ukuran font judul */
 }
 
 .tab-container {
-    margin-top: 60px; /* Jarak antara header dan tab bar */
+    margin-top: 100px; /* Atur sesuai tinggi header dan padding */
+    position: relative;
+    z-index: 10; /* Pastikan z-index lebih tinggi */
 }
 
 .nav-tabs {
@@ -15,59 +25,18 @@
 .nav-tabs .nav-link {
     border: none; /* Menghapus border */
     border-radius: 0; /* Menghapus sudut yang dibulatkan */
-    color: #007bff; /* Warna teks tab tidak aktif */
+    color: #800000; /* Warna teks tab tidak aktif */
     padding: 10px 20px; /* Padding untuk tab */
     font-weight: 500; /* Menebalkan teks */
     transition: background-color 0.3s, color 0.3s; /* Efek transisi untuk hover */
 }
 
 .nav-tabs .nav-link.active {
-    background-color: #0056b3; /* Warna latar belakang aktif */
+    background-color: #800000; /* Warna latar belakang aktif */
     color: white; /* Warna teks aktif */
 }
 
 .nav-tabs .nav-link:hover {
-    background-color: rgba(0, 123, 255, 0.1); /* Warna latar belakang saat hover */
-    color: #0056b3; /* Warna teks saat hover */
-}
-
-.nav-tabs .nav-link:not(.active) {
-    background-col#header {
-        background-color: #007bff; /* Warna biru */
-        padding: 10px 0; /* Padding atas dan bawah */
-        z-index: 10; /* Pastikan header berada di atas */
-    }
-    
-    .tab-container {
-        margin-top: 70px; /* Jarak antara header dan tab bar (sesuaikan jika perlu) */
-    }
-    
-    .nav-tabs {
-        margin-top: 10px; /* Jarak antara tab bar dan elemen lainnya */
-    }
-    
-    .nav-tabs .nav-link {
-        border: none; /* Menghapus border */
-        border-radius: 0; /* Menghapus sudut yang dibulatkan */
-        color: white; /* Warna teks */
-        padding: 10px 20px; /* Padding untuk tab */
-        font-weight: 500; /* Menebalkan teks */
-        transition: background-color 0.3s; /* Efek transisi untuk hover */
-    }
-    
-    .nav-tabs .nav-link.active {
-        background-color: #0056b3; /* Warna latar belakang aktif */
-        color: white; /* Warna teks aktif */
-    }
-    
-    .nav-tabs .nav-link:hover {
-        background-color: #0056b3; /* Warna latar belakang saat hover */
-        color: white; /* Warna teks saat hover */
-    }
-    or: transparent; /* Warna latar belakang tab tidak aktif */
-    border-bottom: 2px solid transparent; /* Garis bawah tab tidak aktif */
-}
-
-.nav-tabs .nav-link:not(.active):hover {
-    border-bottom: 2px solid #007bff; /* Garis bawah saat hover di tab tidak aktif */
+    background-color: rgba(128, 0, 0, 0.1); /* Warna latar belakang saat hover */
+    color: #800000; /* Warna teks saat hover */
 }

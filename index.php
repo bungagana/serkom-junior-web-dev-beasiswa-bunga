@@ -5,38 +5,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css" />
     <title>Pilihan Beasiswa</title>
 </head>
 
 <body>
     <main id="main" class="main scroll">
-        <?php include 'tabBar.php'; ?>
+        <?php include 'tabBar.php'; ?> 
 
         <div class="tab-content" id="myTabContent">
             <!-- Tab Pilihan Beasiswa -->
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <section class="hero text-start">
-    <div class="hero-content">
-        <h1>Ambil Peluang Masa Depanmu</h1>
-        <p>Beasiswa TUP adalah cara terbaik berkuliah.</p>
-        <p>Dapatkan keuntungan mendaftar beasiswa di TUP</p>
-        <div class="hero-buttons">
-            <a href="#daftar" class="btn btn-primary rounded">Daftar</a>
-            <a href="#syarat" class="btn btn-secondary rounded">Cek Syarat</a>
-        </div>
-    </div>
-</section>
-
+                <section class="hero text-start">
+                    <div class="hero-content">
+                        <h1>Ambil Peluang Masa Depanmu</h1>
+                        <p>Beasiswa TUP adalah cara terbaik berkuliah.</p>
+                        <p>Dapatkan keuntungan mendaftar beasiswa di TUP</p>
+                        <div class="hero-buttons">
+                            <a href="#daftar" class="btn btn-primary rounded">Daftar</a>
+                            <a href="#syarat" class="btn btn-secondary rounded">Cek Syarat</a>
+                        </div>
+                    </div>
+                </section>
 
                 <section class="section pilihan">
                     <div class="pagetitle">
                         <h1>Pilihan Beasiswa</h1>
                     </div>
                     <div class="row row-cols-1 row-cols-md-4 g-4">
+                        <!-- Card Beasiswa Akademik -->
                         <div class="col">
                             <div class="card h-100 rounded">
-                                <img src="assets/img/istockphoto-1460535745-1024x1024.jpg" class="card-img-top" alt="Beasiswa Akademik" />
+                                <img src="assets/img/akademik.png" class="card-img-top" alt="Beasiswa Akademik" />
                                 <div class="card-body">
                                     <h5 class="card-title">Beasiswa Akademik</h5>
                                     <p class="card-text">Bantuan keuangan untuk mahasiswa berprestasi akademis.</p>
@@ -44,9 +45,10 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Card Beasiswa Non-Akademik -->
                         <div class="col">
                             <div class="card h-100 rounded">
-                                <img src="assets/img/track-and-field-1867053_1280.jpg" class="card-img-top" alt="Beasiswa Non-Akademik" />
+                                <img src="assets/img/nonakademik.png" class="card-img-top" alt="Beasiswa Non-Akademik" />
                                 <div class="card-body">
                                     <h5 class="card-title">Beasiswa Non-Akademik</h5>
                                     <p class="card-text">Bantuan finansial untuk mahasiswa berprestasi di luar akademik.</p>
@@ -54,6 +56,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Card Beasiswa KIP Kuliah -->
                         <div class="col">
                             <div class="card h-100 rounded">
                                 <img src="assets/img/kip.png" class="card-img-top" alt="Beasiswa KIP Kuliah" />
@@ -64,11 +67,12 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Card Beasiswa Aperti -->
                         <div class="col">
                             <div class="card h-100 rounded">
-                                <img src="assets/img/beasiswa_lain.jpg" class="card-img-top" alt="Beasiswa Lain" />
+                                <img src="assets/img/aperti.png" class="card-img-top" alt="Beasiswa Lain" />
                                 <div class="card-body">
-                                    <h5 class="card-title">Beasiswa Lain</h5>
+                                    <h5 class="card-title">Beasiswa Aperti</h5>
                                     <p class="card-text">Bantuan keuangan dari berbagai lembaga untuk pendidikan tinggi.</p>
                                     <a href="#syarat-lain" class="btn btn-outline-dark" onclick="scrollToSection('syarat-lain')">Selengkapnya</a>
                                 </div>
@@ -76,19 +80,6 @@
                         </div>
                     </div>
                 </section>
-            </div>
-
-            <!-- Tab Daftar -->
-            <div class="tab-pane fade" id="daftar" role="tabpanel" aria-labelledby="daftar-tab">
-                <h2>Formulir Pendaftaran</h2>
-                <p>Isi formulir di bawah ini untuk mendaftar beasiswa.</p>
-                <!-- Tambahkan formulir pendaftaran di sini -->
-            </div>
-
-            <!-- Tab Hasil -->
-            <div class="tab-pane fade" id="hasil" role="tabpanel" aria-labelledby="hasil-tab">
-                <h2>Hasil Seleksi</h2>
-                <p>Pengumuman hasil seleksi beasiswa akan ditampilkan di sini.</p>
             </div>
         </div>
 
@@ -157,6 +148,7 @@
                 <h2>Syarat per Jenis Beasiswa</h2>
             </div>
             <div class="container">
+                <!-- Syarat untuk Beasiswa Akademik -->
                 <div class="syarat-item" id="syarat-akademik">
                     <h5>Beasiswa Akademik</h5>
                     <p>Bantuan keuangan untuk mahasiswa berprestasi akademis.</p>
@@ -166,6 +158,7 @@
                         <li>Melampirkan sertifikat prestasi akademik.</li>
                     </ul>
                 </div>
+                <!-- Syarat untuk Beasiswa Non-Akademik -->
                 <div class="syarat-item" id="syarat-non-akademik">
                     <h5>Beasiswa Non-Akademik</h5>
                     <p>Bantuan finansial untuk mahasiswa berprestasi di luar akademik.</p>
@@ -174,6 +167,7 @@
                         <li>Melampirkan sertifikat prestasi non-akademik.</li>
                     </ul>
                 </div>
+                <!-- Syarat untuk Beasiswa KIP Kuliah -->
                 <div class="syarat-item" id="syarat-kip">
                     <h5>Beasiswa KIP Kuliah</h5>
                     <p>Bantuan biaya pendidikan untuk mahasiswa kurang mampu.</p>
@@ -182,6 +176,7 @@
                         <li>IPK minimal 2.5.</li>
                     </ul>
                 </div>
+                <!-- Syarat untuk Beasiswa Aperti -->
                 <div class="syarat-item" id="syarat-lain">
                     <h5>Beasiswa Lain</h5>
                     <p>Bantuan keuangan dari berbagai lembaga untuk pendidikan tinggi.</p>
@@ -196,18 +191,45 @@
     <footer id="footer" class="footer">
         <div class="container">
             <div class="text-center">
-                <p>© 2024 Beasiswa TUP. All rights reserved.</p>
+                <p>Telkom University Purwokerto - Bunga</p>
             </div>
         </div>
     </footer>
 
+    <!-- Bt scroll to top -->
+    <button id="scrollToTopBtn" class="btn btn-primary rounded-circle" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        /**
+         * Fungsi untuk scroll ke bagian tertentu di halaman
+         * @param {string} sectionId - ID dari section yang ingin dituju
+         */
         function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({ behavior: 'smooth' }); 
         }
+
+        /**
+         * Fungsi untuk scroll ke atas halaman
+         */
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        }
+
+        // Menampilkan tombol scroll ke atas saat halaman di scrll
+        window.onscroll = function() {
+            const btn = document.getElementById("scrollToTopBtn");
+            // Jika scroll lebih dari 200px, show button
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none"; // Jika tidak, hide bt
+            }
+        };
     </script>
 </body>
 
