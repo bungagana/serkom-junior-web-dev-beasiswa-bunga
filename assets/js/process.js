@@ -54,3 +54,7 @@ document.getElementById('formDaftar').addEventListener('submit', function(event)
         alert('Harap lengkapi semua kolom yang diperlukan.');
     }
 });
+
+document.getElementById('inputNumber').addEventListener('input', function (e) {
+    this.value = this.value.replace(/[^0-9]/g, ''); // Hanya izinkan angka
+});

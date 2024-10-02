@@ -99,21 +99,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                     </div>
                                 </div>
 
-                                <!-- Input Email -->
-                                <div class="row mb-3">
-                                    <label for="inputEmail" class="col-sm-2 col-form-label form-label">Email</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Masukkan Email" required />
-                                        <div class="invalid-feedback"> Masukan Email Anda. </div>
-                                    </div>
+                              <!-- Input Email -->
+                               <div class="row mb-3">
+                                <label for="inputEmail" class="col-sm-2 col-form-label form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Masukkan Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Masukkan format email yang valid." />
+                                    <div class="invalid-feedback"> Masukan Email Anda yang valid. </div>
                                 </div>
+                               </div>
 
                                 <!-- Input Nomor HP -->
                                 <div class="row mb-3">
                                     <label for="inputNumber" class="col-sm-2 col-form-label form-label">Nomor HP</label>
                                     <div class="col-sm-10">
-                                        <input type="tel" id="inputNumber" name="inputNumber" class="form-control" placeholder="Masukkan Nomor HP" required />
-                                        <div class="invalid-feedback"> Masukkan Nomor Handphone. </div>
+                                        <input type="tel" id="inputNumber" name="inputNumber" class="form-control" placeholder="Masukkan Nomor HP" required maxlength="13" pattern="\d{1,13}" title="Hanya angka, maksimal 13 digit." />
+                                        <div class="invalid-feedback"> Masukkan Nomor Handphone yang valid. </div>
                                     </div>
                                 </div>
 
