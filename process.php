@@ -1,4 +1,30 @@
 <?php 
+/**
+ * Filename: process.php
+ * Description: Memproses pendaftaran beasiswa dengan menerima input dari formulir, 
+ * meng-upload file, dan menyimpan data ke database.
+ * Author: Bunga
+ * Version: 1.0
+ * Date:  2-10-2024
+ *
+ * Variabel:
+ * - $ipk: Menyimpan nilai IPK yang di-inputkan.
+ * - $nama: Menyimpan nama lengkap yang di-inputkan.
+ * - $email: Menyimpan email yang di-inputkan.
+ * - $nope: Menyimpan nomor telepon yang di-inputkan.
+ * - $semester: Menyimpan semester saat ini yang di-inputkan.
+ * - $beasiswa: Menyimpan jenis beasiswa yang dipilih.
+ * - $status_ajuan: Menyimpan status pendaftaran (default: 'Belum di Verifikasi').
+ * - $file_tmp: Menyimpan path file sementara yang di-upload.
+ * - $file_name: Menyimpan nama file yang di-upload.
+ * - $upload_dir: Menyimpan direktori untuk menyimpan file yang di-upload.
+ * - $file_path: Menyimpan path lengkap file yang di-upload.
+ *
+ * Fungsi:
+ * - Ada di proccess.js
+ */
+
+
 include_once 'connection.php';
 include 'tabBar.php'; 
 

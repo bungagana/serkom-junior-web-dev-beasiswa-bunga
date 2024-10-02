@@ -1,3 +1,24 @@
+<?php
+/**
+ * Filename: index.php
+ * Description: Halaman utama untuk informasi pilihan beasiswa.
+ * Author: Bunga
+ * Version: 1.0
+ * Date: 2-10-2024
+ *
+ * Fungsi:
+ * - scrollToSection(sectionId): Meng-scroll halaman ke bagian tertentu berdasarkan ID.
+ * - scrollToTop(): Meng-scroll halaman ke bagian atas.
+ *
+ * Variabel:
+ * - sectionId: ID dari section yang ingin dituju(syarat per jenis beasisw).
+ * - btn: Tombol untuk scroll ke atas.
+ *
+ * Konstanta:
+ * - Tidak ada konstanta yang digunakan dalam file ini.
+ */
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +44,7 @@
                         <p>Beasiswa TUP adalah cara terbaik berkuliah.</p>
                         <p>Dapatkan keuntungan mendaftar beasiswa di TUP</p>
                         <div class="hero-buttons">
-                            <a href="#daftar" class="btn btn-primary rounded">Daftar</a>
+                            <a href="process.php" class="btn btn-primary rounded">Daftar</a>
                             <a href="#syarat" class="btn btn-secondary rounded">Cek Syarat</a>
                         </div>
                     </div>

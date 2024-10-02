@@ -1,11 +1,37 @@
 <?php
+/**
+ * Filename: result.php
+ * Description: Menampilkan hasil pendaftaran beasiswa, termasuk grafik dan tabel 
+ * yang menunjukkan statistik pendaftar.
+ * Author: Bunga
+ * Version: 1.0
+ * Date:  2-10-2024
+ *
+ * Variabel:
+ * - $stmt: Menyimpan pernyataan SQL untuk mengambil data dari database.
+ * - $results: Menyimpan semua data pendaftaran yang diambil dari database.
+ * - $status_counts: Menyimpan jumlah pendaftar berdasarkan status pendaftaran.
+ * - $ipk_sum: Menyimpan total dan jumlah IPK untuk menghitung rata-rata per semester.
+ * - $beasiswa_counts: Menyimpan jumlah pendaftar berdasarkan jenis beasiswa.
+ * - $status_labels: Menyimpan label untuk status pendaftaran (misalnya, 'Belum di Verifikasi').
+ * - $status_data: Menyimpan data jumlah pendaftar berdasarkan status.
+ * - $semester_labels: Menyimpan label semester dari 1 hingga 8.
+ * - $semester_ipk_data: Menyimpan rata-rata IPK per semester.
+ * - $beasiswa_labels: Menyimpan label jenis beasiswa.
+ * - $beasiswa_data: Menyimpan data jumlah pendaftar berdasarkan jenis beasiswa.
+ *
+ * Fungsi:
+ * - Grafik menggunakan Chart.js untuk menampilkan statistik pendaftar dalam bentuk grafik 
+ *   (grafik pie untuk status, grafik garis untuk IPK, dan grafik batang untuk jenis beasiswa).
+ */
+
+
 include_once 'connection.php';
 include 'tabBar.php';
 
 
 $stmt = $conn->query("SELECT * FROM data_pendaftaran");
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 // Mempersiapkan data untuk grafik
 $status_counts = []; // Menyimpan jumlah pendaftar berdasarkan status
 $ipk_sum = []; // Menyimpan total dan jumlah IPK per semester
