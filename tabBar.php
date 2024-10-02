@@ -19,7 +19,7 @@
 
     <div class="tab-container">
     <?php
-$current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file saat ini
+$current_page = basename($_SERVER['PHP_SELF']); // get nama file saat ini
 ?>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">

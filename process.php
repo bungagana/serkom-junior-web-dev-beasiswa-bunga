@@ -1,50 +1,37 @@
 <?php 
-// Mengimpor koneksi ke database dan tab bar
 include_once 'connection.php';
 include 'tabBar.php'; 
 
-// Menghasilkan nilai IPK acak antara 2.50 dan 4.00
-function generateRandomIPK() {
-    return round(mt_rand(250, 400) / 100, 2); // Membagi dengan 100 untuk mendapatkan dua angka desimal
-}
-
-// Set IPK awal
 $ipk = '';
 
-// Mengecek apakah metode request adalah POST dan tombol submit ditekan
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-    // Mengambil data dari form
-    $nama = $_POST['inputNama']; // Nama pengguna
-    $email = $_POST['inputEmail']; // Email pengguna
-    $nope = $_POST['inputNumber']; // Nomor HP pengguna
-    $semester = $_POST['semester']; // Semester saat ini
-    $ipk = $_POST['randomIPK']; // IPK terakhir (disembunyikan dari input)
-    $beasiswa = $_POST['jenisBeasiswa']; // Jenis beasiswa yang dipilih
-    $status_ajuan = 'Belum di Verifikasi'; // Status pendaftaran awal
+    $nama = $_POST['inputNama'];
+    $email = $_POST['inputEmail'];
+    $nope = $_POST['inputNumber']; 
+    $semester = $_POST['semester']; 
+    $ipk = $_POST['randomIPK'];
+    $beasiswa = $_POST['jenisBeasiswa']; 
+    $status_ajuan = 'Belum di Verifikasi'; 
 
-    // Menangani upload file
+    // handler upload file
     if (isset($_FILES['inputFile']) && $_FILES['inputFile']['error'] == 0) {
         $file_tmp = $_FILES['inputFile']['tmp_name']; // Path file sementara
         $file_name = basename($_FILES['inputFile']['name']); // Nama file yang di-upload
         $upload_dir = 'uploads/'; // Direktori untuk menyimpan file (pastikan bisa ditulis)
         $file_path = $upload_dir . $file_name; // Path lengkap file yang di-upload
 
-        // Memindahkan file yang di-upload ke direktori yang dituju
+        // move file yang di-upload ke direktori yang dituju
         if (move_uploaded_file($file_tmp, $file_path)) {
-            // Menyiapkan query SQL untuk memasukkan data ke database
-            $stmt = $conn->prepare("INSERT INTO tb_daftar (nama, email, nope, semester, ipk, beasiswa, berkas, status_ajuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            // Menjalankan query dengan parameter
+            $stmt = $conn->prepare("INSERT INTO data_pendaftaran (nama, email, nope, semester, ipk, beasiswa, berkas, status_ajuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$nama, $email, $nope, $semester, $ipk, $beasiswa, $file_path, $status_ajuan]);
-
-            // Menampilkan pesan sukses dan mengarahkan ke halaman hasil
             echo "<script>alert('Registrasi berhasil!'); window.location.href='result.php';</script>";
-            exit; // Menghentikan eksekusi script
+            exit; 
         } else {
-            // Gagal upload file
+            // Failed
             echo "<script>alert('Gagal mengupload file.');</script>";
         }
     } else {
-        // Tidak ada file yang di-upload
+        // Empty
         echo "<script>alert('Silakan pilih file untuk diupload.');</script>";
     }
 }
@@ -59,8 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     <link rel="icon" type="image/x-icon" size="32x32" href="assets/img/logo.png" />
     <title>Daftar Beasiswa</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/daftar.css" />
+    <link rel="stylesheet" href="assets/css/process.css" />
     <link rel="stylesheet" href="assets/css/tab.css" />
+
 </head>
 
 <body>
@@ -74,14 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <form action="daftar.php" method="POST" enctype="multipart/form-data" id="formDaftar" class="needs-validation" name="formDaftar" novalidate>
+                            <form action="process.php" method="POST" enctype="multipart/form-data" id="formDaftar" class="needs-validation" novalidate>
                                 
                                 <!-- Input Nama -->
                                 <div class="row mb-3">
                                     <label for="inputNama" class="col-sm-2 col-form-label form-label">Nama</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="inputNama" name="inputNama" class="form-control" placeholder="Masukkan Nama" required />
-                                        <div class="invalid-feedback"> Harap masukkan nama. </div>
+                                        <div class="invalid-feedback"> Masukkan Nama Anda. </div>
                                     </div>
                                 </div>
 
@@ -90,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                     <label for="inputEmail" class="col-sm-2 col-form-label form-label">Email</label>
                                     <div class="col-sm-10">
                                         <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Masukkan Email" required />
-                                        <div class="invalid-feedback"> Harap masukkan email. </div>
+                                        <div class="invalid-feedback"> Masukan Email Anda. </div>
                                     </div>
                                 </div>
 
@@ -99,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                     <label for="inputNumber" class="col-sm-2 col-form-label form-label">Nomor HP</label>
                                     <div class="col-sm-10">
                                         <input type="tel" id="inputNumber" name="inputNumber" class="form-control" placeholder="Masukkan Nomor HP" required />
-                                        <div class="invalid-feedback"> Harap masukkan nomor handphone. </div>
+                                        <div class="invalid-feedback"> Masukkan Nomor Handphone. </div>
                                     </div>
                                 </div>
 
@@ -127,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                     <label for="randomIPK" class="col-sm-2 col-form-label form-label">IPK Terakhir</label>
                                     <div class="col-sm-10">
                                         <input type="hidden" class="form-control" name="randomIPK" id="randomIPKInput" />
-                                        <input type="text" class="form-control" id="randomIPK" disabled readonly>
+                                        <input type="text" class="form-control" id="randomIPK" disabled readonly required>
                                     </div>
                                 </div>
 
@@ -158,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                 <!-- Tombol Submit -->
                                 <div class="row text-end">
                                     <div class="col">
-                                        <button type="reset" name="reset" id="resetForm" onclick="cancel()" class="btn btn-link text-secondary" style="text-decoration: none;">Batal</button>
+                                        <button type="reset" name="reset" id="resetForm" class="btn btn-link text-secondary" style="text-decoration: none;">Batal</button>
                                         <button type="submit" name="submit" id="submitForm" class="btn btn-primary" disabled>Daftar</button>
                                     </div>
                                 </div>
@@ -169,36 +157,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             </div>
         </section>
     </main>
+     <!-- Footer -->
+     <?php include 'footer.php'; ?>
 
-    <script>
-        function generateIPK() {
-            var input = document.getElementById("randomIPK");
-            var hiddenInput = document.getElementById("randomIPKInput");
-            var jenisBeasiswa = document.getElementById("jenisBeasiswa");
-            var inputFile = document.getElementById("inputFile");
-            var submitForm = document.getElementById("submitForm");
-
-            // Generate a random IPK
-            var randomIPK = (Math.random() * (4.00 - 2.50) + 2.50).toFixed(2);
-            input.value = randomIPK;
-            hiddenInput.value = randomIPK;
-
-            // Tampilkan container IPK
-            input.disabled = true; // Pastikan field IPK tidak dapat diedit
-
-            // Enable or disable fields based on the IPK value
-            if (parseFloat(randomIPK) < 3.0) {
-                jenisBeasiswa.disabled = true;
-                inputFile.disabled = true;
-                submitForm.disabled = true;
-                alert('IPK Anda di bawah 3.0, Anda tidak dapat melanjutkan pendaftaran.');
-            } else {
-                jenisBeasiswa.disabled = false;
-                inputFile.disabled = false;
-                submitForm.disabled = false;
-            }
-        }
-    </script>
+    <!-- === JS ==== -->
+    <script src="assets/js/process.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

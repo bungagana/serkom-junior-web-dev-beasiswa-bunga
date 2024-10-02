@@ -39,7 +39,7 @@ canvas {
     margin-top: 2rem;
     border-collapse: collapse;
     width: 100%;
-    position: relative; /* Added for search box positioning */
+    position: relative; 
 }
 
 .table th, .table td {
@@ -59,7 +59,7 @@ canvas {
 
 .search-container {
     display: flex;
-    justify-content: flex-end; /* Align search box to the right */
+    justify-content: flex-end; 
     margin-bottom: 1rem;
 }
 
@@ -67,7 +67,7 @@ canvas {
     padding: 0.5rem;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-    width: 200px; /* Fixed width for consistency */
+    width: 200px;
 }
 
 a {

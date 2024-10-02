@@ -3,9 +3,9 @@ $host = 'localhost';
 $user = 'root';
 $pass = '';
 $db = 'beasiswa';
-$port = 3308; // Specify your port here
+$port = 3308;
 
-$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8"; // Include port in DSN
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8"; 
 
 try {
     $conn = new PDO($dsn, $user, $pass);

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/index.css" />
     <title>Pilihan Beasiswa</title>
 </head>
 
@@ -188,13 +188,8 @@
         </section>
     </main>
 
-    <footer id="footer" class="footer">
-        <div class="container">
-            <div class="text-center">
-                <p>Telkom University Purwokerto - Bunga</p>
-            </div>
-        </div>
-    </footer>
+     <!-- Footer-->
+    <?php include 'footer.php'; ?>
 
     <!-- Bt scroll to top -->
     <button id="scrollToTopBtn" class="btn btn-primary rounded-circle" onclick="scrollToTop()">
@@ -214,13 +209,13 @@
         }
 
         /**
-         * Fungsi untuk scroll ke atas halaman
+         * Fungsi untuk scroll top
          */
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' }); 
         }
 
-        // Menampilkan tombol scroll ke atas saat halaman di scrll
+        // show tombol scroll ke atas saat halaman di scrll
         window.onscroll = function() {
             const btn = document.getElementById("scrollToTopBtn");
             // Jika scroll lebih dari 200px, show button

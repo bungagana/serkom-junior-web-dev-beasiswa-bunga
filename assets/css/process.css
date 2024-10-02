@@ -1,17 +1,14 @@
-/* Reset margin dan padding untuk semua elemen */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Gaya umum untuk body */
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
 }
 
-/* Judul halaman */
 .pagetitle {
     margin: 20px 0;
     text-align: center;
@@ -22,62 +19,46 @@ body {
     color: #343a40;
 }
 
-/* Gaya untuk card */
+/* Style untuk card */
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Gaya untuk form */
+/* Style untuk form */
 form {
     padding: 20px;
 }
 
-/* Gaya untuk input dan select */
+/* Style untuk input dan select */
 input.form-control,
 select.form-select {
     border-radius: 5px;
     border: 1px solid #ced4da;
 }
 
-/* Gaya untuk tombol */
+/* GStyleaya untuk Bt */
 .btn {
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 1rem;
 }
 
-/* Gaya untuk tombol */
+/* Style untuk Bt */
 .btn-primary {
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 1rem;
-    background-color: #800000; /* Background maron untuk tombol primary */
-    color: #fff; /* Teks putih untuk kontras */
-    border: none; /* Tanpa border */
+    background-color: #800000; 
+    color: #fff; 
+    border: none;
 }
 
 .btn-primary:hover {
-    background-color: #600000; /* Warna lebih gelap saat hover */
+    background-color: #600000; 
 }
 
-/* Gaya untuk footer */
-.footer {
-    background-color: #343a40;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.footer .copyright {
-    margin: 0;
-}
-
-
-/* Responsive adjustments */
+/* Responsive  */
 @media (max-width: 768px) {
     .pagetitle h1 {
         font-size: 1.5rem;
@@ -86,4 +67,14 @@ select.form-select {
     .btn {
         width: 100%;
     }
+}
+
+.is-invalid {
+    border-color: #dc3545;
+}
+.invalid-feedback {
+    display: none; 
+}
+.is-invalid + .invalid-feedback {
+    display: block;
 }

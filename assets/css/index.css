@@ -1,0 +1,283 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif; 
+  line-height: 1.6; 
+}
+
+.main {
+  padding: 20px; 
+}
+
+/* Hero Section Styles */
+.hero {
+  position: relative; /* Posisi relatif untuk overlay */
+  background-image: url('https://media.istockphoto.com/id/1496192456/id/foto/potret-seorang-wanita-lulusan-muda-yang-merenungkan-kelulusannya.jpg?s=1024x1024&w=is&k=20&c=R3P-Cq1KPvFiWJchi88V6RZrF_7j-Bp-WsXePsmbWBM='); /* Gambar latar belakang */
+  background-size: cover; 
+  height: 400px;
+  display: flex; /* Flexbox untuk tata letak konten */
+  align-items: center; 
+  justify-content: flex-start; 
+  color: white; 
+  text-align: left; 
+  margin-top: 20px; 
+}
+
+/* Overlay bg */
+.hero::after {
+  content: '';
+  position: absolute; /* Posisi absolut untuk overlay */
+  top: 0; left: 0; right: 0; bottom: 0; /* Mengisi seluruh area */
+  background: rgba(0, 0, 0, 0.7); /* Transparansi untuk gelap */
+  z-index: 1; /* Menempatkan di bawah konten */
+}
+
+.hero-content {
+  position: relative; /* Posisi konten */
+  z-index: 2; /* Menempatkan di atas overlay */
+  padding: 20px; /* Padding di sekitar konten */
+}
+
+.hero h1 {
+  font-size: 2.5rem; 
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  margin: 0; 
+}
+
+.hero-content p:first-of-type {
+  margin-bottom: 0.5rem;
+  line-height: 1.2; 
+}
+
+.hero-buttons {
+  margin-top: 1.5rem; 
+}
+
+.hero-buttons .btn {
+  width: 150px; 
+  padding: 8px 15px;
+  border-radius: 50px; 
+  font-size: 14px; 
+}
+
+.btn-primary {
+  background-color: #800000; 
+  color: white;
+  border: none; 
+}
+.btn-primary:hover {
+  background-color: #190101; 
+  color: white; 
+}
+
+.btn-secondary {
+  background-color: white; 
+  color: #000000; 
+  border: none; 
+}
+
+.btn-secondary:hover {
+  background-color: #000000; 
+  color: white; 
+}
+
+.section {
+  padding: 60px 0; 
+}
+
+.pagetitle h1 {
+  margin-bottom: 20px; 
+  text-align: center; 
+}
+
+
+
+
+/* Style Card */
+.card {
+  border-radius: 20px; 
+  overflow: hidden; /* Menghapus bagian yang melampaui batas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan untuk efek 3D */
+  transition: transform 0.2s; /* Efek transisi saat dihover */
+  max-width: 280px; /* Lebar maksimal kartu */
+  margin: auto; /* Pusatkan kartu */
+}
+
+.card-img-top {
+  height: 200px; 
+  object-fit: cover; 
+  width: 100%; 
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Menggeser kartu ke atas saat dihover */
+}
+
+
+/* Style SK */
+.syarat-ketentuan, .manfaat {
+  background-color: #f8f9fa; 
+  border-radius: 10px; 
+  padding: 20px; 
+  margin-top: 20px; 
+}
+
+.syarat-ketentuan ul {
+  list-style-type: none; 
+  padding: 0; 
+}
+
+.syarat-ketentuan li {
+  padding: 10px; 
+  background-color: #e9ecef; 
+  margin-bottom: 10px; 
+  border-radius: 5px; 
+}
+
+/* Style Alur */
+.alur-pendaftaran .row {
+  display: flex; 
+}
+
+.alur-pendaftaran h2 {
+  margin-bottom: 40px;
+}
+
+/* Gaya untuk kartu alur */
+.alur-card {
+  background-color: #f9f9f9;
+  border: 1px solid #800000; 
+  transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+.alur-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(128, 0, 0, 0.2);
+}
+
+.step {
+  display: inline-block; 
+  background-color: #800000; 
+  color: white; 
+  border-radius: 50%;
+  width: 40px; 
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.2rem; 
+  margin-bottom: 15px; 
+}
+
+.card-body {
+  flex: 1; 
+}
+
+/* Responsive*/
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.8rem; 
+  }
+
+  .hero-buttons .btn {
+    width: 100%; 
+    margin: 5px 0; 
+  }
+
+  .section {
+    padding: 40px 0; 
+  }
+
+  .card {
+    max-width: 90%; 
+  }
+
+  .manfaat .img-manfaat {
+    font-size: 40px; 
+  }
+
+  .step {
+    width: 30px; 
+    height: 30px; 
+    line-height: 30px;
+    font-size: 1rem; 
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.5rem; 
+  }
+
+  .hero-content {
+    padding: 10px; 
+  }
+}
+
+/* Styles syarat pr bea */
+.syarat-per-beasiswa {
+  background-color: #f8f9fa; 
+  padding: 40px 20px; 
+  border-radius: 10px; 
+}
+
+.syarat-per-beasiswa .pagetitle {
+  text-align: center;
+  margin-bottom: 20px; 
+}
+
+.syarat-per-beasiswa h2 {
+  font-size: 2rem; 
+  color: #343a40; 
+}
+
+.syarat-item {
+  background-color: #ffffff; 
+  padding: 20px; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  margin-bottom: 20px; 
+}
+
+.syarat-item h5 {
+  font-size: 1.5rem; 
+  color: #800000; 
+  margin-bottom: 10px; 
+}
+
+.syarat-item p {
+  margin-bottom: 10px; 
+}
+
+.syarat-item ul {
+  list-style-type: disc; 
+  padding-left: 20px; 
+  color: #495057; 
+}
+
+.syarat-item li {
+  margin-bottom: 5px; 
+}
+
+@media (max-width: 768px) {
+  .syarat-per-beasiswa h2 {
+      font-size: 1.8rem; 
+  }
+
+  .syarat-item h5 {
+      font-size: 1.25rem; 
+  }
+}
+
+#scrollToTopBtn {
+  position: fixed; 
+  bottom: 20px; 
+  right: 20px; 
+  display: none; 
+  z-index: 1000; 
+  background-color: #600000;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #600000; 
+}

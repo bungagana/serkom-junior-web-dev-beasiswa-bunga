@@ -1,9 +1,9 @@
 <?php
-include_once 'connection.php'; // Menghubungkan ke database
-include 'tabBar.php'; // Menyertakan navigasi/tab bar
+include_once 'connection.php';
+include 'tabBar.php';
 
-// Mengambil data dari tabel tb_daftar
-$stmt = $conn->query("SELECT * FROM tb_daftar");
+
+$stmt = $conn->query("SELECT * FROM data_pendaftaran");
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Mempersiapkan data untuk grafik
@@ -11,19 +11,19 @@ $status_counts = []; // Menyimpan jumlah pendaftar berdasarkan status
 $ipk_sum = []; // Menyimpan total dan jumlah IPK per semester
 $beasiswa_counts = []; // Menyimpan jumlah pendaftar berdasarkan jenis beasiswa
 
-// Menghitung jumlah dan total IPK
+// Calculate jumlah dan total IPK
 foreach ($results as $row) {
-    // Menghitung berdasarkan status verifikasi
+    // calculate berdasarkan status verifikasi
     $status = $row['status_ajuan'];
     if (!isset($status_counts[$status])) {
         $status_counts[$status] = 0; // Inisialisasi jika status belum ada
     }
     $status_counts[$status]++;
 
-    // Menghitung rata-rata IPK per semester
+    // calculate rata-rata IPK per semester
     $semester = $row['semester'];
     if (!isset($ipk_sum[$semester])) {
-        $ipk_sum[$semester] = ['total' => 0, 'count' => 0]; // Inisialisasi
+        $ipk_sum[$semester] = ['total' => 0, 'count' => 0]; 
     }
     $ipk_sum[$semester]['total'] += $row['ipk'];
     $ipk_sum[$semester]['count']++;
@@ -36,7 +36,6 @@ foreach ($results as $row) {
     $beasiswa_counts[$beasiswa]++;
 }
 
-// Mempersiapkan data untuk grafik
 $status_labels = array_keys($status_counts); // Label status
 $status_data = array_values($status_counts); // Data jumlah per status
 
@@ -44,7 +43,7 @@ $semester_labels = range(1, 8); // Label semester
 $semester_ipk_data = [];
 foreach ($semester_labels as $sem) {
     if (isset($ipk_sum[$sem])) {
-        $average_ipk = $ipk_sum[$sem]['total'] / $ipk_sum[$sem]['count']; // Menghitung rata-rata IPK
+        $average_ipk = $ipk_sum[$sem]['total'] / $ipk_sum[$sem]['count']; // hitung rata-rata IPK
         $semester_ipk_data[] = round($average_ipk, 2);
     } else {
         $semester_ipk_data[] = 0; // Jika tidak ada data
@@ -121,6 +120,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
             </table>
         </div>
     </main>
+ 
 
     <script>
         // Grafik Status Verifikasi
@@ -199,7 +199,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
             }
         });
 
-        // Fitur Pencarian Tabel
+        // Fitur search Tabel
         document.getElementById('tableSearch').addEventListener('keyup', function() {
             const filter = this.value.toLowerCase();
             const rows = document.querySelectorAll('.table tbody tr');
@@ -207,7 +207,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
                 const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(filter));
-                row.style.display = match ? '' : 'none'; // Menampilkan atau menyembunyikan baris
+                row.style.display = match ? '' : 'none'; 
             });
         });
     </script>
