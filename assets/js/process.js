@@ -2,14 +2,13 @@
  * Filename: process.js
  * Description: Mengelola logika frontend untuk formulir pendaftaran beasiswa.
  * Author: Bunga
- * Version: 1.0
+ * Version: 1.1
  * Date: 2-10-2024
  */
 
 /**
  * Fungsi untuk menghasilkan IPK secara acak dan mengatur status form.
  */
-
 function generateIPK() {
     var input = document.getElementById("randomIPK");
     var hiddenInput = document.getElementById("randomIPKInput");
@@ -55,6 +54,7 @@ document.getElementById('formDaftar').addEventListener('submit', function(event)
     }
 });
 
+// Input nomor telepon hanya menerima angka
 document.getElementById('inputNumber').addEventListener('input', function (e) {
     this.value = this.value.replace(/[^0-9]/g, '');
-});
+}); 

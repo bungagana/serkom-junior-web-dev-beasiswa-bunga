@@ -6,78 +6,112 @@
  * Author: Bunga
  * Version: 1.0
  * Date:  2-10-2024
- *
- * Variabel:
- * - $stmt: Menyimpan pernyataan SQL untuk mengambil data dari database.
- * - $results: Menyimpan semua data pendaftaran yang diambil dari database.
- * - $status_counts: Menyimpan jumlah pendaftar berdasarkan status pendaftaran.
- * - $ipk_sum: Menyimpan total dan jumlah IPK untuk menghitung rata-rata per semester.
- * - $beasiswa_counts: Menyimpan jumlah pendaftar berdasarkan jenis beasiswa.
- * - $status_labels: Menyimpan label untuk status pendaftaran (misalnya, 'Belum di Verifikasi').
- * - $status_data: Menyimpan data jumlah pendaftar berdasarkan status.
- * - $semester_labels: Menyimpan label semester dari 1 hingga 8.
- * - $semester_ipk_data: Menyimpan rata-rata IPK per semester.
- * - $beasiswa_labels: Menyimpan label jenis beasiswa.
- * - $beasiswa_data: Menyimpan data jumlah pendaftar berdasarkan jenis beasiswa.
- *
- * Fungsi:
- * - Grafik menggunakan Chart.js untuk menampilkan statistik pendaftar dalam bentuk grafik 
- *   (grafik pie untuk status, grafik garis untuk IPK, dan grafik batang untuk jenis beasiswa).
  */
 
-
+// Include necessary files
 include_once 'connection.php';
 include 'tabBar.php';
 
+/**
+ * Mengambil data pendaftaran dari database.
+ * @param PDO $conn Koneksi ke database.
+ * @return array Data pendaftaran.
+ */
+function getPendaftaranData($conn) {
+    $stmt = $conn->query("SELECT * FROM data_pendaftaran");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $conn->query("SELECT * FROM data_pendaftaran");
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+     // Debugging: Lihat data yang diambil
+    //  var_dump($data); 
+}
+
+/**
+ * Menghitung jumlah pendaftar berdasarkan status.
+ * @param array $results Daftar pendaftar.
+ * @return array Jumlah pendaftar per status.
+ */
+function calculateStatusCounts($results) {
+    $status_counts = [];
+    foreach ($results as $row) {
+        $status = $row['status_ajuan'];
+        if (!isset($status_counts[$status])) {
+            $status_counts[$status] = 0;
+        }
+        $status_counts[$status]++;
+    }
+      // Debugging: Lihat isi $status_counts
+    //   var_dump($status_counts);
+    // Mengurutkan berdasarkan jumlah pendaftar
+    arsort($status_counts);
+    return $status_counts;
+}
+
+/**
+ * Menghitung rata-rata IPK per semester.
+ * @param array $results Daftar pendaftar.
+ * @return array Rata-rata IPK per semester.
+ */
+function calculateAverageIPK($results) {
+    $ipk_sum = [];
+    foreach ($results as $row) {
+        $semester = $row['semester'];
+        if (!isset($ipk_sum[$semester])) {
+            $ipk_sum[$semester] = ['total' => 0, 'count' => 0]; 
+        }
+        $ipk_sum[$semester]['total'] += $row['ipk'];
+        $ipk_sum[$semester]['count']++;
+    }
+    // Debugging: Lihat total dan count per semester
+    // var_dump($ipk_sum);
+
+    $semester_ipk_data = [];
+    for ($sem = 1; $sem <= 8; $sem++) {
+        if (isset($ipk_sum[$sem]) && $ipk_sum[$sem]['count'] > 0) {
+            $average_ipk = $ipk_sum[$sem]['total'] / $ipk_sum[$sem]['count'];
+            $semester_ipk_data[] = round($average_ipk, 2);
+        } else {
+            $semester_ipk_data[] = 0; // Jika tidak ada data
+        }
+    }
+    
+
+    return $semester_ipk_data;
+}
+
+/**
+ * Menghitung jumlah pendaftar berdasarkan jenis beasiswa.
+ * @param array $results Daftar pendaftar.
+ * @return array Jumlah pendaftar per jenis beasiswa.
+ */
+function calculateBeasiswaCounts($results) {
+    $beasiswa_counts = [];
+    foreach ($results as $row) {
+        $beasiswa = $row['beasiswa'];
+        if (!isset($beasiswa_counts[$beasiswa])) {
+            $beasiswa_counts[$beasiswa] = 0;
+        }
+        $beasiswa_counts[$beasiswa]++;
+    }
+    // Mengurutkan berdasarkan jumlah pendaftar
+    arsort($beasiswa_counts);
+    return $beasiswa_counts;
+}
+
+// Ambil data pendaftaran
+$results = getPendaftaranData($conn);
+
 // Mempersiapkan data untuk grafik
-$status_counts = []; // Menyimpan jumlah pendaftar berdasarkan status
-$ipk_sum = []; // Menyimpan total dan jumlah IPK per semester
-$beasiswa_counts = []; // Menyimpan jumlah pendaftar berdasarkan jenis beasiswa
+$status_counts = calculateStatusCounts($results);
+$semester_ipk_data = calculateAverageIPK($results);
+$beasiswa_counts = calculateBeasiswaCounts($results);
 
-// Calculate jumlah dan total IPK
-foreach ($results as $row) {
-    // calculate berdasarkan status verifikasi
-    $status = $row['status_ajuan'];
-    if (!isset($status_counts[$status])) {
-        $status_counts[$status] = 0; // Inisialisasi jika status belum ada
-    }
-    $status_counts[$status]++;
+// Menyiapkan data untuk grafik
+$status_labels = array_keys($status_counts);
+$status_data = array_values($status_counts);
+$beasiswa_labels = array_keys($beasiswa_counts);
+$beasiswa_data = array_values($beasiswa_counts);
 
-    // calculate rata-rata IPK per semester
-    $semester = $row['semester'];
-    if (!isset($ipk_sum[$semester])) {
-        $ipk_sum[$semester] = ['total' => 0, 'count' => 0]; 
-    }
-    $ipk_sum[$semester]['total'] += $row['ipk'];
-    $ipk_sum[$semester]['count']++;
-
-    // Menghitung jumlah pendaftar per jenis beasiswa
-    $beasiswa = $row['beasiswa'];
-    if (!isset($beasiswa_counts[$beasiswa])) {
-        $beasiswa_counts[$beasiswa] = 0; // Inisialisasi jika beasiswa belum ada
-    }
-    $beasiswa_counts[$beasiswa]++;
-}
-
-$status_labels = array_keys($status_counts); // Label status
-$status_data = array_values($status_counts); // Data jumlah per status
-
-$semester_labels = range(1, 8); // Label semester
-$semester_ipk_data = [];
-foreach ($semester_labels as $sem) {
-    if (isset($ipk_sum[$sem])) {
-        $average_ipk = $ipk_sum[$sem]['total'] / $ipk_sum[$sem]['count']; // hitung rata-rata IPK
-        $semester_ipk_data[] = round($average_ipk, 2);
-    } else {
-        $semester_ipk_data[] = 0; // Jika tidak ada data
-    }
-}
-
-$beasiswa_labels = array_keys($beasiswa_counts); // Label beasiswa
-$beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
+// HTML dan grafik
 ?>
 
 <!DOCTYPE html>
@@ -111,7 +145,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
             </div>
 
             <div class="search-container">
-                <input type="text" id="tableSearch" placeholder="Cari..." aria-label="Search"> <!-- Input pencarian -->
+                <input type="text" id="tableSearch" placeholder="Cari..." aria-label="Search">
             </div>
 
             <table class="table mt-4">
@@ -146,7 +180,6 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
             </table>
         </div>
     </main>
- 
 
     <script>
         // Grafik Status Verifikasi
@@ -157,7 +190,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
                 labels: <?php echo json_encode($status_labels); ?>,
                 datasets: [{
                     data: <?php echo json_encode($status_data); ?>,
-                    backgroundColor: ['#36A2EB', '#FF6384'], // Warna untuk pie chart
+                    backgroundColor: ['#36A2EB', '#FF6384'],
                     borderWidth: 1,
                     hoverOffset: 4,
                 }]
@@ -179,7 +212,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
         const ipkChart = new Chart(ctxIPK, {
             type: 'line',
             data: {
-                labels: <?php echo json_encode($semester_labels); ?>,
+                labels: <?php echo json_encode(range(1, 8)); ?>,
                 datasets: [{
                     label: 'IPK Rata-rata',
                     data: <?php echo json_encode($semester_ipk_data); ?>,
@@ -194,7 +227,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true // Mulai sumbu Y dari 0
+                        beginAtZero: true
                     }
                 }
             }
@@ -219,7 +252,7 @@ $beasiswa_data = array_values($beasiswa_counts); // Data jumlah per beasiswa
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true // Mulai sumbu Y dari 0
+                        beginAtZero: true
                     }
                 }
             }

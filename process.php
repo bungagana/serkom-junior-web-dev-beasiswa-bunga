@@ -4,107 +4,123 @@
  * Description: Memproses pendaftaran beasiswa dengan menerima input dari formulir, 
  * meng-upload file, dan menyimpan data ke database.
  * Author: Bunga
- * Version: 1.0
+ * Version: 1.1
  * Date:  2-10-2024
- *
- * Variabel:
- * - $ipk: Menyimpan nilai IPK yang di-inputkan.
- * - $nama: Menyimpan nama lengkap yang di-inputkan.
- * - $email: Menyimpan email yang di-inputkan.
- * - $nope: Menyimpan nomor telepon yang di-inputkan.
- * - $semester: Menyimpan semester saat ini yang di-inputkan.
- * - $beasiswa: Menyimpan jenis beasiswa yang dipilih.
- * - $status_ajuan: Menyimpan status pendaftaran (default: 'Belum di Verifikasi').
- * - $file_tmp: Menyimpan path file sementara yang di-upload.
- * - $file_name: Menyimpan nama file yang di-upload.
- * - $upload_dir: Menyimpan direktori untuk menyimpan file yang di-upload.
- * - $file_path: Menyimpan path lengkap file yang di-upload.
- *
- * Fungsi:
- * - Ada di proccess.js
  */
 
+include_once 'connection.php'; 
+include 'tabBar.php'; 
 
- include_once 'connection.php'; 
- include 'tabBar.php'; 
- 
- if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-     // Ambil dan sanitasi input
-     $nama = htmlspecialchars(trim($_POST['inputNama']));
-     $email = htmlspecialchars(trim($_POST['inputEmail']));
-     $nope = htmlspecialchars(trim($_POST['inputNumber'])); 
-     $semester = htmlspecialchars(trim($_POST['semester'])); 
-     $ipk = htmlspecialchars(trim($_POST['randomIPK']));
-     $beasiswa = htmlspecialchars(trim($_POST['jenisBeasiswa'])); 
-     $status_ajuan = 'Belum di Verifikasi'; 
- 
-     // Validasi input
-     $errors = [];
- 
-     // Validasi nama
-     if (empty($nama)) {
-         $errors[] = 'Nama tidak boleh kosong.';
-     }
- 
-     // Validasi email
-     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-         $errors[] = 'Email tidak valid.';
-     }
- 
-     // Validasi nomor telepon
-     if (empty($nope) || !preg_match('/^\d{10,13}$/', $nope)) {
-         $errors[] = 'Nomor telepon tidak valid. Harus antara 10-13 digit.';
-     }
- 
-     // Validasi semester
-     if (empty($semester)) {
-         $errors[] = 'Semester harus dipilih.';
-     }
- 
-     // Validasi IPK
-     if (empty($ipk) || $ipk < 0 || $ipk > 4) {
-         $errors[] = 'IPK harus antara 0 dan 4.';
-     }
- 
-     // Validasi file upload
-     if (isset($_FILES['inputFile']) && $_FILES['inputFile']['error'] == 0) {
-         $file_tmp = $_FILES['inputFile']['tmp_name'];
-         $file_name = basename($_FILES['inputFile']['name']);
-         $upload_dir = 'uploads/';
-         $file_path = $upload_dir . $file_name;
-         $allowed_types = ['application/pdf'];
- 
-         // Validasi tipe file
-         if (!in_array($_FILES['inputFile']['type'], $allowed_types)) {
-             $errors[] = 'Hanya file PDF yang diizinkan.';
-         }
- 
-         // Validasi ukuran file
-         if ($_FILES['inputFile']['size'] > 2 * 1024 * 1024) { // 2 MB
-             $errors[] = 'Ukuran file terlalu besar. Maksimal 2 MB.';
-         }
- 
-         // Jika tidak ada error, do upload
-         if (empty($errors) && move_uploaded_file($file_tmp, $file_path)) {
-             $stmt = $conn->prepare("INSERT INTO data_pendaftaran (nama, email, nope, semester, ipk, beasiswa, berkas, status_ajuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-             $stmt->execute([$nama, $email, $nope, $semester, $ipk, $beasiswa, $file_path, $status_ajuan]);
-             echo "<script>alert('Registrasi berhasil!'); window.location.href='result.php';</script>";
-             exit;
-         } else {
-             $errors[] = 'Gagal mengupload file.';
-         }
-     } else {
-         $errors[] = 'Silakan pilih file untuk diupload.';
-     }
- 
-     // Jika ada error, show alert
-     if (!empty($errors)) {
-         foreach ($errors as $error) {
-             echo "<script>alert('$error');</script>";
-         }
-     }
- }
- ?>
+// Fungsi untuk memvalidasi input
+/**
+ * Fungsi: validateInput
+ * Deskripsi: Memvalidasi input dari formulir pendaftaran.
+ * Input: array $data - Data yang akan divalidasi.
+ * Output: array - Daftar error jika ada, atau array kosong jika valid.
+ */
+function validateInput($data) {
+    $errors = [];
+    
+    // Validasi nama
+    if (empty($data['inputNama'])) {
+        $errors[] = 'Nama tidak boleh kosong.';
+    }
+    
+    // Validasi email
+    if (empty($data['inputEmail']) || !filter_var($data['inputEmail'], FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Email tidak valid.';
+    }
+    
+    // Validasi nomor telepon
+    if (empty($data['inputNumber']) || !preg_match('/^\d{10,13}$/', $data['inputNumber'])) {
+        $errors[] = 'Nomor telepon tidak valid. Harus antara 10-13 digit.';
+    }
+    
+    // Validasi semester
+    if (empty($data['semester'])) {
+        $errors[] = 'Semester harus dipilih.';
+    }
+    
+    // Validasi IPK
+    if (empty($data['randomIPK']) || $data['randomIPK'] < 0 || $data['randomIPK'] > 4) {
+        $errors[] = 'IPK harus antara 0 dan 4.';
+    }
+
+    return $errors;
+}
+
+// Fungsi untuk meng-upload file
+/**
+ * Fungsi: uploadFile
+ * Deskripsi: Mengupload file ke server dan mengembalikan path file.
+ * Input: array $file - Data file yang di-upload.
+ * Output: string|null - Path file jika berhasil, atau null jika gagal.
+ */
+function uploadFile($file) {
+    $upload_dir = 'uploads/';
+    $allowed_types = ['application/pdf'];
+
+    // Validasi tipe file
+    if (!in_array($file['type'], $allowed_types)) {
+        return null; // Tipe file tidak valid
+    }
+
+    // Validasi ukuran file
+    if ($file['size'] > 2 * 1024 * 1024) { // 2 MB
+        return null; // Ukuran file terlalu besar
+    }
+
+    $file_name = basename($file['name']);
+    $file_path = $upload_dir . $file_name;
+
+    if (move_uploaded_file($file['tmp_name'], $file_path)) {
+        return $file_path; // Kembali dengan path file yang di-upload
+    }
+
+    return null; // Gagal mengupload file
+}
+
+// Main processing logic
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    // Ambil dan sanitasi input
+    $data = [
+        'inputNama' => htmlspecialchars(trim($_POST['inputNama'])),
+        'inputEmail' => htmlspecialchars(trim($_POST['inputEmail'])),
+        'inputNumber' => htmlspecialchars(trim($_POST['inputNumber'])), 
+        'semester' => htmlspecialchars(trim($_POST['semester'])), 
+        'randomIPK' => htmlspecialchars(trim($_POST['randomIPK'])),
+        'jenisBeasiswa' => htmlspecialchars(trim($_POST['jenisBeasiswa']))
+    ];
+
+    // Validasi input
+    $errors = validateInput($data);
+    
+    // Validasi file upload
+    if (isset($_FILES['inputFile']) && $_FILES['inputFile']['error'] == 0) {
+        $file_path = uploadFile($_FILES['inputFile']);
+        if ($file_path === null) {
+            $errors[] = 'Gagal mengupload file.';
+        }
+    } else {
+        $errors[] = 'Silakan pilih file untuk diupload.';
+    }
+
+    // Jika tidak ada error, simpan ke database
+    if (empty($errors)) {
+        $status_ajuan = 'Belum di Verifikasi'; 
+        $stmt = $conn->prepare("INSERT INTO data_pendaftaran (nama, email, nope, semester, ipk, beasiswa, berkas, status_ajuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$data['inputNama'], $data['inputEmail'], $data['inputNumber'], $data['semester'], $data['randomIPK'], $data['jenisBeasiswa'], $file_path, $status_ajuan]);
+        echo "<script>alert('Registrasi berhasil!'); window.location.href='result.php';</script>";
+        exit;
+    } else {
+        // Jika ada error, show alert
+        foreach ($errors as $error) {
+            echo "<script>alert('$error');</script>";
+        }
+    }
+}
+?>
+
  
 <!DOCTYPE html>
 <html lang="en">
@@ -167,18 +183,16 @@
                                     <div class="col-sm-10">
                                         <select class="form-select" name="semester" id="semester" aria-label="Pilih Semester" required onchange="generateIPK()">
                                             <option selected disabled value="">Pilih Semester</option>
-                                            <option value="1">Semester 1</option>
-                                            <option value="2">Semester 2</option>
-                                            <option value="3">Semester 3</option>
-                                            <option value="4">Semester 4</option>
-                                            <option value="5">Semester 5</option>
-                                            <option value="6">Semester 6</option>
-                                            <option value="7">Semester 7</option>
-                                            <option value="8">Semester 8</option>
+                                            <?php
+                                            for ($i = 1; $i <= 8; $i++) {
+                                                echo "<option value='$i'>Semester $i</option>";
+                                            }
+                                            ?>
                                         </select>
                                         <div class="invalid-feedback"> Harap pilih semester. </div>
                                     </div>
                                 </div>
+
 
                                 <!-- Input IPK -->
                                 <div class="row mb-3">

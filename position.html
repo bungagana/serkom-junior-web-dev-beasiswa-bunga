@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positioning Example</title>
+    <style>
+        body {
+            height: 2000px; /* untuk scroll */
+        }
+    </style>
+</head>
+<body>
+
+<div style="position: static; border: 1px solid black;">Static Position</div>
+
+<div style="position: relative; top: 10px; left: 20px; border: 1px solid blue;">
+    Relative Position
+</div>
+
+<div style="position: relative; border: 1px solid green; padding: 20px;">
+    Relative Parent
+    <div style="position: absolute; top: 10px; left: 10px; border: 1px solid red;">
+        Absolute Position
+    </div>
+</div>
+
+<div style="position: fixed; top: 10px; right: 10px; border: 1px solid purple;">
+    Fixed Position
+</div>
+
+<div style="height: 200px; border: 1px solid orange;">
+    Scroll Down
+    <div style="position: sticky; top: 0; background: yellow; border: 1px solid black;">
+        Sticky Position
+    </div>
+</div>
+
+</body>
+</html>
