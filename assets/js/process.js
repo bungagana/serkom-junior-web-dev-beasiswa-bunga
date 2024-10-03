@@ -56,5 +56,5 @@ document.getElementById('formDaftar').addEventListener('submit', function(event)
 });
 
 document.getElementById('inputNumber').addEventListener('input', function (e) {
-    this.value = this.value.replace(/[^0-9]/g, ''); // Hanya izinkan angka
+    this.value = this.value.replace(/[^0-9]/g, '');
 });

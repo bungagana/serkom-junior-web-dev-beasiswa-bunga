@@ -1,42 +1,42 @@
 header {
-    background-color: #800000; /* Warna merah maron untuk header */
-    color: white; /* Warna teks di header */
-    padding: 15px; /* Padding untuk header */
-    position: fixed; /* Membuat header tetap di atas saat scroll */
-    width: 100%; /* Lebar penuh */
+    background-color: #800000; 
+    color: white; 
+    padding: 15px; 
+    position: fixed; 
+    width: 100%; 
     z-index: 20; /* Z-index agar tetap di atas tab */
 }
 
 header h1 {
-    margin: 0; /* Menghapus margin h1 */
-    font-size: 24px; /* Ukuran font judul */
+    margin: 0;
+    font-size: 24px;
 }
 
 .tab-container {
-    margin-top: 100px; /* Atur sesuai tinggi header dan padding */
+    margin-top: 100px; 
     position: relative;
     z-index: 10; /* Pastikan z-index lebih tinggi */
 }
 
 .nav-tabs {
-    border-bottom: 1px solid #dee2e6; /* Garis bawah tab */
+    border-bottom: 1px solid #dee2e6; /* undr line tab */
 }
 
 .nav-tabs .nav-link {
-    border: none; /* Menghapus border */
-    border-radius: 0; /* Menghapus sudut yang dibulatkan */
-    color: #800000; /* Warna teks tab tidak aktif */
-    padding: 10px 20px; /* Padding untuk tab */
-    font-weight: 500; /* Menebalkan teks */
-    transition: background-color 0.3s, color 0.3s; /* Efek transisi untuk hover */
+    border: none; 
+    border-radius: 0; 
+    color: #800000; 
+    padding: 10px 20px; 
+    font-weight: 500; 
+    transition: background-color 0.3s, color 0.3s; 
 }
 
 .nav-tabs .nav-link.active {
-    background-color: #800000; /* Warna latar belakang aktif */
-    color: white; /* Warna teks aktif */
+    background-color: #800000; 
+    color: white; 
 }
 
 .nav-tabs .nav-link:hover {
-    background-color: rgba(128, 0, 0, 0.1); /* Warna latar belakang saat hover */
-    color: #800000; /* Warna teks saat hover */
+    background-color: rgba(128, 0, 0, 0.1); 
+    color: #800000; 
 }

@@ -1,0 +1,64 @@
+<?php
+function kenalan($nama, $kota){
+  echo "Perkenalkan, nama saya " . $nama . "\n";
+  echo "Asal Kota " . $kota . "\n";
+}
+
+// Memanggil fungsi dengan nama dan kota
+kenalan("Mukidi", "Malang");
+?>
+
+
+
+memory_limit = 128M
+
+$harmness = array("COLD", "HOT", "WARM");
+
+$siswa = array("nama" => "Ali", "umur" => 20);
+
+
+$mahasiswa = array(
+    array("Ali", 20, "Jakarta"),
+    array("Budi", 22, "Bandung"),
+    array("Citra", 21, "Surabaya")
+);
+
+
+
+<?php
+$mahasiswa = array(
+    array("Nama" => "Ali", "Umur" => 20, "Kota" => "Jakarta"),
+    array("Nama" => "Budi", "Umur" => 22, "Kota" => "Bandung"),
+    array("Nama" => "Citra", "Umur" => 21, "Kota" => "Surabaya")
+);
+
+echo "Nama: " . $mahasiswa[0]["Nama"] . ", Umur: " . $mahasiswa[0]["Umur"] . ", Kota: " . $mahasiswa[0]["Kota"];
+?>
+
+$mahasiswa = array(
+    array( // Tahun 1
+        array("Ali", 20, "Jakarta"),
+        array("Budi", 22, "Bandung")
+    ),
+    array( // Tahun 2
+        array("Citra", 21, "Surabaya"),
+        array("Doni", 23, "Medan")
+    )
+);
+
+
+
+$mahasiswa = array(
+    "Nama" => "Ali",
+    "Umur" => 20,
+    "Kota" => "Jakarta"
+);
+echo $mahasiswa["Nama"]; // Output: Ali
+
+
+
+$matriks = array(
+    array(1, 2, 3),
+    array(4, 5, 6),
+    array(7, 8, 9)
+);

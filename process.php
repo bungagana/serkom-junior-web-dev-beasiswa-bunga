@@ -25,43 +25,87 @@
  */
 
 
-include_once 'connection.php';
-include 'tabBar.php'; 
-
-$ipk = '';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-    $nama = $_POST['inputNama'];
-    $email = $_POST['inputEmail'];
-    $nope = $_POST['inputNumber']; 
-    $semester = $_POST['semester']; 
-    $ipk = $_POST['randomIPK'];
-    $beasiswa = $_POST['jenisBeasiswa']; 
-    $status_ajuan = 'Belum di Verifikasi'; 
-
-    // handler upload file
-    if (isset($_FILES['inputFile']) && $_FILES['inputFile']['error'] == 0) {
-        $file_tmp = $_FILES['inputFile']['tmp_name']; // Path file sementara
-        $file_name = basename($_FILES['inputFile']['name']); // Nama file yang di-upload
-        $upload_dir = 'uploads/'; // Direktori untuk menyimpan file (pastikan bisa ditulis)
-        $file_path = $upload_dir . $file_name; // Path lengkap file yang di-upload
-
-        // move file yang di-upload ke direktori yang dituju
-        if (move_uploaded_file($file_tmp, $file_path)) {
-            $stmt = $conn->prepare("INSERT INTO data_pendaftaran (nama, email, nope, semester, ipk, beasiswa, berkas, status_ajuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$nama, $email, $nope, $semester, $ipk, $beasiswa, $file_path, $status_ajuan]);
-            echo "<script>alert('Registrasi berhasil!'); window.location.href='result.php';</script>";
-            exit; 
-        } else {
-            // Failed
-            echo "<script>alert('Gagal mengupload file.');</script>";
-        }
-    } else {
-        // Empty
-        echo "<script>alert('Silakan pilih file untuk diupload.');</script>";
-    }
-}
-?>
+ include_once 'connection.php'; 
+ include 'tabBar.php'; 
+ 
+ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+     // Ambil dan sanitasi input
+     $nama = htmlspecialchars(trim($_POST['inputNama']));
+     $email = htmlspecialchars(trim($_POST['inputEmail']));
+     $nope = htmlspecialchars(trim($_POST['inputNumber'])); 
+     $semester = htmlspecialchars(trim($_POST['semester'])); 
+     $ipk = htmlspecialchars(trim($_POST['randomIPK']));
+     $beasiswa = htmlspecialchars(trim($_POST['jenisBeasiswa'])); 
+     $status_ajuan = 'Belum di Verifikasi'; 
+ 
+     // Validasi input
+     $errors = [];
+ 
+     // Validasi nama
+     if (empty($nama)) {
+         $errors[] = 'Nama tidak boleh kosong.';
+     }
+ 
+     // Validasi email
+     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+         $errors[] = 'Email tidak valid.';
+     }
+ 
+     // Validasi nomor telepon
+     if (empty($nope) || !preg_match('/^\d{10,13}$/', $nope)) {
+         $errors[] = 'Nomor telepon tidak valid. Harus antara 10-13 digit.';
+     }
+ 
+     // Validasi semester
+     if (empty($semester)) {
+         $errors[] = 'Semester harus dipilih.';
+     }
+ 
+     // Validasi IPK
+     if (empty($ipk) || $ipk < 0 || $ipk > 4) {
+         $errors[] = 'IPK harus antara 0 dan 4.';
+     }
+ 
+     // Validasi file upload
+     if (isset($_FILES['inputFile']) && $_FILES['inputFile']['error'] == 0) {
+         $file_tmp = $_FILES['inputFile']['tmp_name'];
+         $file_name = basename($_FILES['inputFile']['name']);
+         $upload_dir = 'uploads/';
+         $file_path = $upload_dir . $file_name;
+         $allowed_types = ['application/pdf'];
+ 
+         // Validasi tipe file
+         if (!in_array($_FILES['inputFile']['type'], $allowed_types)) {
+             $errors[] = 'Hanya file PDF yang diizinkan.';
+         }
+ 
+         // Validasi ukuran file
+         if ($_FILES['inputFile']['size'] > 2 * 1024 * 1024) { // 2 MB
+             $errors[] = 'Ukuran file terlalu besar. Maksimal 2 MB.';
+         }
+ 
+         // Jika tidak ada error, do upload
+         if (empty($errors) && move_uploaded_file($file_tmp, $file_path)) {
+             $stmt = $conn->prepare("INSERT INTO data_pendaftaran (nama, email, nope, semester, ipk, beasiswa, berkas, status_ajuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+             $stmt->execute([$nama, $email, $nope, $semester, $ipk, $beasiswa, $file_path, $status_ajuan]);
+             echo "<script>alert('Registrasi berhasil!'); window.location.href='result.php';</script>";
+             exit;
+         } else {
+             $errors[] = 'Gagal mengupload file.';
+         }
+     } else {
+         $errors[] = 'Silakan pilih file untuk diupload.';
+     }
+ 
+     // Jika ada error, show alert
+     if (!empty($errors)) {
+         foreach ($errors as $error) {
+             echo "<script>alert('$error');</script>";
+         }
+     }
+ }
+ ?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 
