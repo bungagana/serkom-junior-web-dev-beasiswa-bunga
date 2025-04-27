@@ -1,3 +1,5 @@
+![Tampilan Web Beasiswa](./serkom-lp.png)
+(./serkom--lp.jpeg)
 
 ## Fungsi Menu
 
